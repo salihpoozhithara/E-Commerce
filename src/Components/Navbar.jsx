@@ -10,7 +10,7 @@ const Navbar = () => {
   const [visisble, setVisible] = useState(false);
 
 
-  const {setShowSearch} = useContext(ShopContext)
+  const {setShowSearch, getCartCount} = useContext(ShopContext)
 
 
   return (
@@ -60,7 +60,7 @@ const Navbar = () => {
             className="absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 
             bg-black text-white aspect-square rounded-full text-[8px]"
           >
-            10
+            {getCartCount()}
           </p>
         </Link>
         <img
