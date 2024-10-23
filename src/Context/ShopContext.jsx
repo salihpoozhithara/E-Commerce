@@ -1,8 +1,13 @@
+/* eslint-disable no-empty */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
+// eslint-disable-next-line no-unused-vars
 import { createContext, useEffect, useState } from "react";
 import { products } from "../assets/frontend_assets/assets";
 import { toast } from "react-toastify";
+// eslint-disable-next-line no-unused-vars
 import Product from './../Pages/Product';
+import { useNavigate } from "react-router-dom";
 
 export const ShopContext = createContext();
 
@@ -13,9 +18,11 @@ const ShopContextProvider = (props) => {
 
     const [search,setSearch] = useState('')
     const [showSearch,setShowSearch] = useState(false)
-
     // for cart
     const [cartItems,setCartItems] = useState({})
+    const navigate = useNavigate()
+
+
 
     const addToCart = async (itemId,size) => {
         // for toast notification
@@ -74,7 +81,7 @@ const ShopContextProvider = (props) => {
     }
 
     // cart total
-    const getCartAmount = () =>{
+    const getCartAmount =  () =>{
         let totalAmount = 0
         for(const items in cartItems){
             let itemInfo = products.find((Product)=> Product._id === items)
@@ -104,7 +111,7 @@ const ShopContextProvider = (props) => {
         search,setSearch,showSearch,setShowSearch,
         cartItems, addToCart,
         getCartCount,updateQuantity,
-        getCartAmount
+        getCartAmount,navigate
     }
 
     return (
