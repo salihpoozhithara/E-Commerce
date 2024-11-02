@@ -13,6 +13,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 // before making api call create some variables
 export const backendUrl = import.meta.env.VITE_BACKEND_URL
+// for currency 
+export const currency = '$'
 
 
 const App = () => {

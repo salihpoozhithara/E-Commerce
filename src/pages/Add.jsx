@@ -52,7 +52,7 @@ const Add = ({token}) => {
         const response = await axios.post( backendUrl + "/api/product/add",formData,{ headers: { token } })
         console.log(response.data);
 
-        // for toast notf
+        // for after submission removing data & toast notf
         if (response.data.success) {
           toast.success(response.data.message);
           setName("");
