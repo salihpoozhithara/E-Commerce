@@ -1,8 +1,13 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import { assets } from '../assets/admin_assets/assets'
+import axios  from 'axios';
+import { backendUrl } from '../App';
+import { toast } from "react-toastify";
 
-const Add = () => {
+
+const Add = ({token}) => {
 
   // for state variables for store 4 images 
   const [image1,setImage1] = useState(false)
@@ -19,9 +24,59 @@ const Add = () => {
   const [bestSeller,setBestseller] = useState(false)
   const [sizes,setSizes] = useState([])
 
+  // for submit the form 
+  const onSubmitHandler = async (e) =>{
+      e.preventDefault()
+
+      try {
+        // var
+        const formData = new FormData()
+
+        // add images & product data into formdata
+        formData.append("name",name)
+        formData.append("description",description)
+        formData.append("price",price)
+        formData.append("category",category)
+        formData.append("subCategory",subCategory)
+        formData.append("bestseller",bestSeller)
+        formData.append("sizes",JSON.stringify(sizes))
+
+        image1 && formData.append("image1",image1)
+        image2 && formData.append("image2",image2)
+        image3 && formData.append("image3",image3)
+        image4 && formData.append("image4",image4)
+
+
+        // send this formdata using this api in our backend using AXIOS 
+        // var
+        const response = await axios.post( backendUrl + "/api/product/add",formData,{ headers: { token } })
+        console.log(response.data);
+
+        // for toast notf
+        if (response.data.success) {
+          toast.success(response.data.message);
+          setName("");
+          setDescription("");
+          setImage1(false);
+          setImage2(false);
+          setImage3(false);
+          setImage4(false);
+          setPrice("");
+        } else {
+          toast.error(response.data.message);
+        }
+        
+        
+
+      } catch (error) {
+        console.log(error);
+      toast.error(error.message);
+      }
+  }
+
 
   return (
-    <form className='flex flex-col w-full items-start gap-3 pl-[20%] my-8'>
+    <form onSubmit={onSubmitHandler} className='flex flex-col w-full items-start gap-3 '>
         <div>
           <p className='mb-2'>Upload Image</p>
           <div className='flex gap-2'>

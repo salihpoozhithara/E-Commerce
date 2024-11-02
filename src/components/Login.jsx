@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import axios from 'axios'
 import React, { useState } from 'react'
@@ -12,28 +13,31 @@ const Login = ({setToken}) => {
 
 
     // onsubmithandler() is executed when we will submit this form
-    const onSubmitHandler = async(e) =>{
+    const onSubmitHandler = async (e) => {
         try {
-            e.preventDefault()
-            // verify if our email & pass saved or not
-            // make one api call 
-            const response = await axios.post(backendUrl + '/api/user/admin',{email,password})   
-            // console.log(response);
-            if (response.data.success) {
-                //auth sucess
-                setToken(response.data.token)
-            }else{
-                toast.error(response.data.message)
-            }
-
+            e.preventDefault();
+            // Verify if our email & password are saved or not
+            // Make an API call 
+            const response = await axios.post(
+                backendUrl + '/api/user/admin',
+                { email, password },
+            );
             
-
+            console.log(response.data); // Log the entire response for debugging
+    
+            if (response.data.success) {
+                // Auth success
+                setToken(response.data.token);
+            } else {
+                toast.error(response.data.message);
+            }
+    
         } catch (error) {
             console.log(error);
-            toast.error(error.message)
-            
+            toast.error(error.message);
         }
-    }
+    };
+    
 
 
   return (
